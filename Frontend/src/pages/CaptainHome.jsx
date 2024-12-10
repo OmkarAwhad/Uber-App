@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 
-function Home() {
+function CaptainHome() {
    return (
-      <div>Home</div>
+      <div>CaptainHome</div>
    )
 }
 
-export default Home
+export default CaptainHome

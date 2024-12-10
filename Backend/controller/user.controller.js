@@ -52,34 +52,28 @@ module.exports.loginUser = async (req, res, next) => {
 				msg: "Error in validationResult",
 			});
 		}
-		console.log("2");
 
 		const { email, password } = req.body;
-		console.log("3");
 
 		const userData = await User.findOne({ email: email }).select(
-			'+password'
+			"+password"
 		);
-		// console.log(userData)
 		if (!userData) {
 			return res.status(401).json({ msg: "User not found" });
 		}
-		console.log("4");
 
 		const passwordMatch = await userData.comparePassword(password);
 		if (!passwordMatch) {
 			return res.status(400).json({ msg: "Invalid password" });
 		}
-		console.log("5");
 
 		const token = userData.generateAuthToken();
-		console.log("6");
 
 		// logged in rakhta h user ko (baar baar token pass karne ki jarurat nahi)
-		res.cookie('token', token);
+		res.cookie("token", token);
 
-		return res.status(200).json({
-			userData,
+		return res.status(201).json({
+			user:userData,
 			token,
 			msg: "User logged in successfully",
 		});
@@ -91,32 +85,38 @@ module.exports.loginUser = async (req, res, next) => {
 	}
 };
 
-module.exports.getUserProfile = async(req,res,next)=>{
+module.exports.getUserProfile = async (req, res, next) => {
 	try {
-		console.log("User : ", req.user)
-		return res.status(200).json(req.user)
+		console.log("User : ", req.user);
+		return res.status(201).json(req.user);
 	} catch (error) {
-		console.log(error)
-		res.status(500).json({error: "Internal Server Error in getting user profile"})
+		console.log(error);
+		res.status(500).json({
+			error: "Internal Server Error in getting user profile",
+		});
 	}
-}
+};
 
-module.exports.logoutUser = async(req,res,next)=>{
+module.exports.logoutUser = async (req, res, next) => {
 	try {
 		const authHeader = req.headers.authorization;
 		const token = authHeader
 			? authHeader.split(" ")[1]
 			: req.cookies.token;
-          if(!token){
-               return res.status(401).json({msg: "No token, user not logged in"})
-          }
+		if (!token) {
+			return res
+				.status(401)
+				.json({ msg: "No token, user not logged in" });
+		}
 
-          const blacklistToken = await BlacklistToken.create({token})
+		const blacklistToken = await BlacklistToken.create({ token });
 
-          res.clearCookie('token')
-          return res.status(200).json({msg: "User logged out successfully"})
+		res.clearCookie("token");
+		return res.status(201).json({ msg: "User logged out successfully" });
 	} catch (error) {
-		console.log(error)
-		res.status(500).json({error: "Internal Server Error in logging user out"})
+		console.log(error);
+		res.status(500).json({
+			error: "Internal Server Error in logging user out",
+		});
 	}
-}
+};

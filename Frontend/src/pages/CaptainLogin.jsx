@@ -1,19 +1,47 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from "react";
 import UberLogoBlack from "../assets/UberLogoBlack.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
+import { CaptainDataContext } from "../context/captainContext";
+import axios from "axios";
 
 function CaptainLogin() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [captainData, setCaptainData] = useState({});
+	// const [captainData, setCaptainData] = useState({});
 
 	const [showPassword, setShowPassword] = useState(false);
 
-	function submitHandler(event) {
+	const navigate = useNavigate();
+	const { captain, setCaptain } = useContext(CaptainDataContext);
+
+	async function submitHandler(event) {
 		event.preventDefault();
-		setCaptainData({ email: email, password: password });
+		const captainData = {
+			email: email,
+			password: password,
+		};
+
+		try {
+			const response = await axios.post(
+				`${import.meta.env.VITE_BASE_URL}/captain/login`,
+				captainData
+			);
+			if (response.status === 201) {
+				setCaptain(response.data.captain);
+				localStorage.setItem("captain-token", response.data.token);
+				navigate("/captain-home");
+			}
+		} catch (error) {
+			console.error(error);
+			alert(
+				error.response?.data?.message ||
+					"Invalid email or password."
+			);
+		}
+
 		setEmail("");
 		setPassword("");
 	}
@@ -30,7 +58,7 @@ function CaptainLogin() {
 				</Link>
 				<form onSubmit={(e) => submitHandler(e)}>
 					<h3 className=" font-bold text-base px-1 pt-5 py-1 ">
-						What's your email
+						What&apos;s your email
 					</h3>
 					<input
 						type="email"

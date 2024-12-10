@@ -1,29 +1,46 @@
-import React, { useState } from "react";
-import RegisterUberLogo from "../assets/RegisterUberLogo.png";
-import { Link } from "react-router-dom";
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from "react";
+import UberLogoBlack from "../assets/UberLogoBlack.png";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
+import axios from "axios";
+import { UserDataContext } from "../context/userContext";
 
 function UserSignup() {
+	const [showPassword, setShowPassword] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [userData, setUserData] = useState({});
+	// const [userData, setUserData] = useState({});
 
-	const [showPassword, setShowPassword] = useState(false);
+	const { user, setUser } = useContext(UserDataContext);
 
-	function submitHandler(event) {
+	const navigate = useNavigate();
+
+	async function submitHandler(event) {
 		event.preventDefault();
-		setUserData({
-			fullName: {
-				firstName: firstName,
-				lastName: lastName,
+		const newUser = {
+			fullname: {
+				firstname: firstName,
+				lastname: lastName,
 			},
 			email: email,
 			password: password,
-		});
-		
+		};
+
+		const response = await axios.post(
+			`${import.meta.env.VITE_BASE_URL}/users/register`,
+			newUser
+		);
+
+		if (response.status === 201) {
+			setUser(response.data.user);
+			localStorage.setItem('token', response.data.token);
+			navigate("/home");
+		}
+
 		setEmail("");
 		setFirstName("");
 		setLastName("");
@@ -36,13 +53,13 @@ function UserSignup() {
 				<Link to={"/"}>
 					<img
 						className="h-12"
-						src={RegisterUberLogo}
-						alt="RegisterUberLogo"
+						src={UberLogoBlack}
+						alt="UberLogoBlack"
 					/>
 				</Link>
 				<form onSubmit={(e) => submitHandler(e)}>
 					<h3 className=" font-bold text-base px-1 pt-5 py-1 ">
-						What's your name
+						What&apos;s your name
 					</h3>
 					<div className=" flex gap-2 ">
 						<input
@@ -66,7 +83,7 @@ function UserSignup() {
 					</div>
 
 					<h3 className=" font-bold text-base px-1 pt-5 py-1 ">
-						What's your email
+						What&apos;s your email
 					</h3>
 					<input
 						type="email"
@@ -99,7 +116,7 @@ function UserSignup() {
 					</div>
 
 					<button className=" bg-black w-full text-center px-3 py-2 rounded-md my-5 text-white font-semibold">
-						Sign Up
+						Create account
 					</button>
 
 					<p className="text-sm font-semibold text-center">

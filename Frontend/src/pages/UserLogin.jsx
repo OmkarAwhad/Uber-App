@@ -1,19 +1,37 @@
-import React, { useState } from "react";
+/* eslint-disable no-unused-vars */
+import React, { useContext, useState } from "react";
 import UberLogoBlack from "../assets/UberLogoBlack.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
+import { UserDataContext } from "../context/userContext";
+import axios from "axios";
 
 const UserLogin = () => {
+	const [showPassword, setShowPassword] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [userData, setUserData] = useState({});
+	// const [userData, setUserData] = useState({});
 
-	const [showPassword, setShowPassword] = useState(false);
+	const navigate = useNavigate();
 
-	function submitHandler(event) {
+	const { user, setUser } = useContext(UserDataContext);
+
+	async function submitHandler(event) {
 		event.preventDefault();
-		setUserData({ email: email, password: password });
+		const userData = { email: email, password: password };
+
+		const response = await axios.post(
+			`${import.meta.env.VITE_BASE_URL}/users/login`,
+			userData
+		);
+
+		if (response.status === 201) {
+			setUser(response.data.user);
+			localStorage.setItem('token', response.data.token);
+			navigate("/home");
+		}
+
 		setEmail("");
 		setPassword("");
 	}
@@ -30,7 +48,7 @@ const UserLogin = () => {
 				</Link>
 				<form onSubmit={(e) => submitHandler(e)}>
 					<h3 className=" font-bold text-base px-1 pt-5 py-1 ">
-						What's your email
+						What&apos;s your email
 					</h3>
 					<input
 						type="email"
