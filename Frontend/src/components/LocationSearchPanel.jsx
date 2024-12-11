@@ -57,8 +57,7 @@ function LocationSearchPanel({ setVehiclePanelOpen, setPanelOpen }) {
 				</h2>
 				<h4 className="font-medium">lorem20</h4>
 			</div>
-         
-         
+               
 			
 		</>
 	);

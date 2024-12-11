@@ -8,12 +8,18 @@ import { RiArrowDownWideFill } from "react-icons/ri";
 import LocationSearchPanel from "../components/LocationSearchPanel";
 import VehiclePanel from "../components/VehiclePanel";
 import { RiArrowDownWideLine } from "react-icons/ri";
+import ConfirmRide from "../components/ConfirmRide";
+import LookingForDriver from "../components/LookingForDriver";
+import WaitingForDriver from "../components/WaitingForDriver";
 
 function Home() {
 	const [pickup, setPickup] = useState("");
 	const [destination, setDestination] = useState("");
 	const [panelOpen, setPanelOpen] = useState(false);
 	const [vehiclePanelOpen, setVehiclePanelOpen] = useState(false);
+	const [confirmRidePanel, setConfirmRidePanel] = useState(false);
+	const [vehicleFound, setVehicleFound] = useState(false);
+	const [waitingForDriver, setWaitingForDriver] = useState(false);
 
 	const submitHandler = (event) => {
 		event.preventDefault();
@@ -104,13 +110,13 @@ function Home() {
 				</div>
 
 				<div
-					className={`bg-white absolute -bottom-10 m-1 w-[98%] duration-500 transition-all  px-3  ${
-						vehiclePanelOpen 
-							? " h-[60%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
+					className={`bg-white absolute -bottom-10 m-1  w-[98%] duration-500 transition-all  px-3  ${
+						vehiclePanelOpen
+							? " h-[80%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
 							: " h-0 "
 					} `}
 				>
-					<div className=" mb-3 h-[15%] w-full ">
+					<div className=" mb-3 h-[11%] w-full ">
 						<RiArrowDownWideLine
 							onClick={() => setVehiclePanelOpen(false)}
 							className=" text-xl mt-1 text-gray-300 mx-auto "
@@ -119,8 +125,82 @@ function Home() {
 							Choose a Vehicle
 						</h3>
 					</div>
+					<div className=" h-full overflow-y-auto ">
+						<VehiclePanel
+							setConfirmRidePanel={setConfirmRidePanel}
+						/>
+					</div>
+				</div>
+
+				<div
+					className={`bg-white absolute -bottom-10 m-1 w-[98%] duration-500 transition-all  px-3  ${
+						confirmRidePanel
+							? " h-[80%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
+							: " h-0 "
+					} `}
+				>
+					<div className=" mb-3 h-[15%] w-full ">
+						<RiArrowDownWideLine
+							onClick={() => setConfirmRidePanel(false)}
+							className=" text-xl mt-1 text-gray-300 mx-auto "
+						/>
+						<h3 className="text-2xl font-semibold">
+							Confirm your Ride
+						</h3>
+					</div>
 					<div className=" h-full overflow-y-auto scroll-m-0 ">
-						<VehiclePanel />
+						<ConfirmRide
+							setConfirmRidePanel={setConfirmRidePanel}
+							setVehicleFound={setVehicleFound}
+						/>
+					</div>
+				</div>
+
+				<div
+					className={`bg-white absolute -bottom-10 m-1 w-[98%] duration-500 transition-all  px-3  ${
+						vehicleFound
+							? " h-[80%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
+							: " h-0 "
+					} `}
+				>
+					<div className=" mb-3 h-[15%] w-full ">
+						<RiArrowDownWideLine
+							onClick={() => setVehicleFound(false)}
+							className=" text-xl mt-1 text-gray-300 mx-auto "
+						/>
+						{/* <h3 className="text-2xl font-semibold">
+							Confirm your Ride
+						</h3> */}
+					</div>
+					<div className=" h-full overflow-y-auto scroll-m-0 ">
+						<WaitingForDriver
+							setVehicleFound={setVehicleFound}
+							setWaitingForDriver={setWaitingForDriver}
+							waitingForDriver={waitingForDriver}
+						/>
+					</div>
+				</div>
+
+				<div
+					className={`bg-white absolute -bottom-10 m-1 w-[98%] duration-500 transition-all  px-3  ${
+						waitingForDriver
+							? " h-[80%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
+							: " h-0 "
+					} `}
+				>
+					<div className=" mb-3 h-[15%] w-full ">
+						<RiArrowDownWideLine
+							onClick={() => setWaitingForDriver(false)}
+							className=" text-xl mt-1 text-gray-300 mx-auto "
+						/>
+						<h3 className="text-2xl font-semibold">
+							Looking for a Driver
+						</h3>
+					</div>
+					<div className=" h-full overflow-y-auto scroll-m-0 ">
+						<LookingForDriver
+							setVehicleFound={setVehicleFound}
+						/>
 					</div>
 				</div>
 			</div>
