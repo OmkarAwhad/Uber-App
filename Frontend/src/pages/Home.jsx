@@ -35,7 +35,7 @@ function Home() {
 
 			<div>
 				<img
-					className=" h-screen w-screen object-cover "
+					className=" h-screen w-full object-cover "
 					src={UberMap}
 					alt="Map"
 				/>
@@ -43,70 +43,78 @@ function Home() {
 
 			<div className="absolute top-0 flex flex-col justify-end w-full h-screen ">
 				<div
-					className={`bg-white flex w-full flex-col justify-start gap-2 px-4 pb-4 h-[30%] rounded-t-xl relative pt-4 `}
-				>
-					<div
-						className={`h-1/4 w-full flex ${
-							panelOpen ? "justify-end" : "justify-start"
-						}`}
-					>
-						{panelOpen ? (
-							<div className=" text-end w-8 h-8 flex justify-center items-center mx-2 bg-gray-100 rounded-full">
-								<RiArrowDownWideFill
-									onClick={() => setPanelOpen(false)}
-									className=" text-lg text-gray-800 "
-								/>
-							</div>
-						) : (
-							<h4 className=" text-2xl  font-bold px-3">
-								Find a trip
-							</h4>
-						)}
-					</div>
-
-					<form
-						className="h-3/4 "
-						onSubmit={(e) => submitHandler(e)}
-					>
-						{/* <div className=" line absolute bg-gray-500 bottom-0 h-[55px] w-[1px] rounded-full left-8 top-[50%] "></div> */}
-						<div className="flex justify-start gap-3 items-center bg-[#eee] px-8 py-2 mt-3 w-full rounded-lg  ">
-							<BiCurrentLocation className=" absolute left-6 " />
-							<input
-								type="text"
-								className="outline-none bg-transparent "
-								placeholder="Enter your location"
-								onClick={() => setPanelOpen(true)}
-								value={pickup}
-								onChange={(e) =>
-									setPickup(e.target.value)
-								}
-							/>
-						</div>
-						<div className="flex justify-start gap-3 items-center bg-[#eee] px-8 py-2 mt-3 w-full rounded-lg ">
-							<GrLocationPin className=" absolute left-6 " />
-							<input
-								type="text"
-								className="outline-none bg-transparent "
-								placeholder="Enter your Destination"
-								onClick={() => setPanelOpen(true)}
-								value={destination}
-								onChange={(e) =>
-									setDestination(e.target.value)
-								}
-							/>
-						</div>
-					</form>
-				</div>
-
-				<div
-					className={`bg-white w-full duration-500 transition-all   ${
-						panelOpen ? " h-[80%] " : " h-0 "
+					className={`bg-white w-full absolute bottom-0 duration-500 transition-all   ${
+						panelOpen ? " h-[100%] " : " h-[25%] "
 					} `}
 				>
-					<LocationSearchPanel
-						setPanelOpen={setPanelOpen}
-						setVehiclePanelOpen={setVehiclePanelOpen}
-					/>
+					<div className="bg-white absolute flex w-full flex-col justify-start gap-2 px-4 pb-4 h-1/4 rounded-t-xl  pt-4 ">
+						<div
+							className={` w-full flex ${
+								panelOpen
+									? "justify-end"
+									: "justify-start"
+							}`}
+						>
+							{panelOpen ? (
+								<div className=" text-end w-8 h-8 flex justify-center items-center mx-2 bg-gray-100 rounded-full">
+									<RiArrowDownWideFill
+										onClick={() =>
+											setPanelOpen(false)
+										}
+										className=" text-lg text-gray-800 "
+									/>
+								</div>
+							) : (
+								<h4 className=" text-2xl  font-bold px-3">
+									Find a trip
+								</h4>
+							)}
+						</div>
+						{/* <h4 className="text-2xl font-bold">Find a trip</h4> */}
+
+						<form
+							className="space-y-2 "
+							onSubmit={(e) => submitHandler(e)}
+						>
+							<div className="flex justify-start gap-3 items-center bg-[#eee] px-8 py-2 mt-3 w-full rounded-lg  ">
+								<BiCurrentLocation className=" absolute left-6 " />
+								<input
+									type="text"
+									className="outline-none w-full bg-transparent "
+									placeholder="Enter your location"
+									onClick={() => setPanelOpen(true)}
+									value={pickup}
+									onChange={(e) =>
+										setPickup(e.target.value)
+									}
+								/>
+							</div>
+							<div className="flex justify-start gap-3 items-center bg-[#eee] px-8 py-2 mt-3 w-full rounded-lg ">
+								<GrLocationPin className=" absolute left-6 " />
+								<input
+									type="text"
+									className="outline-none w-full bg-transparent "
+									placeholder="Enter your Destination"
+									onClick={() => setPanelOpen(true)}
+									value={destination}
+									onChange={(e) =>
+										setDestination(e.target.value)
+									}
+								/>
+							</div>
+						</form>
+					</div>
+
+					<div
+						className={`bg-white w-full absolute bottom-0 duration-500 transition-all   ${
+							panelOpen ? " h-[75%] " : " h-0 "
+						} `}
+					>
+						<LocationSearchPanel
+							setPanelOpen={setPanelOpen}
+							setVehiclePanelOpen={setVehiclePanelOpen}
+						/>
+					</div>
 				</div>
 
 				<div
