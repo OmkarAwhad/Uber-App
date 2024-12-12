@@ -3,6 +3,9 @@
 import React from "react";
 import CarImage from "../assets/CarImage.jpg";
 import { RiArrowDownWideLine } from "react-icons/ri";
+import { RiMapPinUserFill } from "react-icons/ri";
+import { MdLocationPin } from "react-icons/md";
+import { IoCashOutline } from "react-icons/io5";
 
 const WaitingForDriver = ({ waitingForDriver }) => {
 	return (
@@ -29,7 +32,7 @@ const WaitingForDriver = ({ waitingForDriver }) => {
 			<div className="flex gap-2 justify-between flex-col items-center">
 				<div className="w-full mt-5">
 					<div className="flex items-center gap-5 p-3 border-b-2">
-						<i className="ri-map-pin-user-fill"></i>
+						<RiMapPinUserFill className="text-2xl font-semibold" />
 						<div>
 							<h3 className="text-lg font-medium">
 								562/11-A
@@ -40,7 +43,7 @@ const WaitingForDriver = ({ waitingForDriver }) => {
 						</div>
 					</div>
 					<div className="flex items-center gap-5 p-3 border-b-2">
-						<i className="text-lg ri-map-pin-2-fill"></i>
+						<MdLocationPin className="text-2xl font-semibold" />
 						<div>
 							<h3 className="text-lg font-medium">
 								562/11-A
@@ -51,7 +54,7 @@ const WaitingForDriver = ({ waitingForDriver }) => {
 						</div>
 					</div>
 					<div className="flex items-center gap-5 p-3">
-						<i className="ri-currency-line"></i>
+						<IoCashOutline className="text-2xl font-semibold" />
 						<div>
 							<h3 className="text-lg font-medium">
 								{/* ₹{props.ride?.fare}{" "} */}mm

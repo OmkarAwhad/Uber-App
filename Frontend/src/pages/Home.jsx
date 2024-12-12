@@ -181,27 +181,12 @@ function Home() {
 					</div>
 				</div>
 
-				<div
-					className={`bg-white absolute -bottom-10 m-1 w-[98%] duration-500 transition-all  px-3  ${
-						waitingForDriver
-							? " h-[80%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
-							: " h-0 "
-					} `}
-				>
-					<div className=" mb-3 h-[15%] w-full ">
-						<RiArrowDownWideLine
-							onClick={() => setWaitingForDriver(false)}
-							className=" text-xl mt-1 text-gray-300 mx-auto "
-						/>
-						<h3 className="text-2xl font-semibold">
-							Looking for a Driver
-						</h3>
-					</div>
-					<div className=" h-full overflow-y-auto scroll-m-0 ">
-						<LookingForDriver
-							setVehicleFound={setVehicleFound}
-						/>
-					</div>
+				<div className=" h-full  ">
+					<LookingForDriver
+						setWaitingForDriver={setWaitingForDriver}
+						waitingForDriver={waitingForDriver}
+						setVehicleFound={setVehicleFound}
+					/>
 				</div>
 			</div>
 		</div>

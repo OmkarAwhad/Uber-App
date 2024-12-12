@@ -7,22 +7,18 @@ import { RiMapPinUserFill } from "react-icons/ri";
 import { MdLocationPin } from "react-icons/md";
 import { IoCashOutline } from "react-icons/io5";
 
-const LookingForDriver = ({
-	setVehicleFound,
-	waitingForDriver,
-	setWaitingForDriver,
-}) => {
+function RidePopUp({ RidePopUpState, setRidePopUpState, setConfirmRidePopUpState }) {
 	return (
 		<div
 			className={`bg-white absolute -bottom-10 m-1 w-[98%] duration-500 transition-all  px-3  ${
-				waitingForDriver
-					? " h-[80%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
+				RidePopUpState
+					? " h-[78%] border-[1px] border-gray-200 rounded-md shadow-2xl shadow-black "
 					: " h-0 "
 			} `}
 		>
-			<div className=" mb-3 h-[15%] w-full ">
+			<div className=" mb-3 h-[11%] w-full ">
 				<RiArrowDownWideLine
-					onClick={() => setWaitingForDriver(false)}
+					onClick={() => setRidePopUpState(false)}
 					className=" text-xl mt-1 text-gray-300 mx-auto "
 				/>
 				<h3 className="text-2xl font-semibold">
@@ -30,9 +26,20 @@ const LookingForDriver = ({
 				</h3>
 			</div>
 
+			<div className="flex justify-between items-center bg-yellow-400 px-3 py-3 rounded-md ">
+				<div className="flex gap-3 items-center ">
+					<img
+						className="w-16 h-16 rounded-full object-cover"
+						src="https://images.unsplash.com/photo-1496345875659-11f7dd282d1d?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+						alt=""
+					/>
+					<h2 className="text-base font-medium">Shubham Das</h2>
+				</div>
+				<p className="font-bold text-xl">2.2KM</p>
+			</div>
+
 			<div className="flex gap-2 justify-between flex-col items-center">
-				<img className="h-20" src={CarImage} alt="" />
-				<div className="w-full mt-5">
+				<div className="w-full mt-2">
 					<div className="flex items-center gap-5 p-3 border-b-2">
 						<RiMapPinUserFill className="text-2xl font-semibold" />
 						<div>
@@ -67,9 +74,26 @@ const LookingForDriver = ({
 						</div>
 					</div>
 				</div>
+
+				<div className="flex gap-2 items-center justify-between ">
+
+					<button
+						className=" bg-gray-300 px-8 py-2 rounded-lg font-semibold text-gray-700 text-lg "
+						onClick={() => setRidePopUpState(false)}
+					>
+						Ignore
+					</button>
+					<button
+						className=" bg-green-600 px-8 py-2 rounded-lg font-semibold text-white text-lg "
+						onClick={() => setConfirmRidePopUpState(true)}
+					>
+						Accept
+					</button>
+				</div>
+            
 			</div>
 		</div>
 	);
-};
+}
 
-export default LookingForDriver;
+export default RidePopUp;
