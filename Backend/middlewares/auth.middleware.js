@@ -12,7 +12,7 @@ module.exports.authUser = async (req, res, next) => {
 		const token = authHeader
 			? authHeader.split(" ")[1]
 			: req.cookies.token;
-		console.log("Token: " + token);
+		// console.log("Token: " + token);
 		if (!token) {
 			return res.status(401).json({ msg: "Token not found" });
 		}
@@ -24,17 +24,17 @@ module.exports.authUser = async (req, res, next) => {
 
 		try {
 			const decode = jwt.verify(token, process.env.JWT_SECRET);
-			console.log("Decode:", JSON.stringify(decode, null, 2));
-			console.log("id : ", decode._id);
+			// console.log("Decode:", JSON.stringify(decode, null, 2));
+			// console.log("id : ", decode._id);
 			let user = await User.findById({ _id: decode._id });
 			if (!user) {
 				return res.status(401).json({ msg: "User not found" });
 			}
 			// user = user.toObject();
-			console.log("1", user);
+			// console.log("1", user);
 
 			req.user = user;
-			console.log("1");
+			// console.log("1");
 
 			return next();
 		} catch (error) {
